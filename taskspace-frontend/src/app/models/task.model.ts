@@ -1,8 +1,8 @@
 export enum TaskStatus {
-  to_do = 'To Do',
-  in_progress = 'In Progress',
-  in_review = 'In Review',
-  done = 'Done',
+  to_do = 'todo',
+  in_progress = 'inprogress',
+  in_review = 'inreview',
+  done = 'done',
 }
 
 export interface Column { 
