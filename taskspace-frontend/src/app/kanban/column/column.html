@@ -6,11 +6,15 @@
 
         <div class="column-tasks">
           @for (task of tasks; track task.id) {
-            <app-task-card [task]="task" />
+            <app-task-card
+              [task]="task"
+              (edit)="onEditTask($event)"
+              (delete)="onDeleteTask($event)"
+            />
           }
         </div>
 
-        <button class="column-add-btn">
+        <button class="column-add-btn" (click)="onAddTask()">
           + Add task
         </button>
-      </div> 
+      </div>

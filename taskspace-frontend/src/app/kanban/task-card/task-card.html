@@ -2,7 +2,7 @@
               <div class="taskcard-title">{{ task.title }}</div>
               <div class="taskcard-desc">{{ task.description }}</div>
               <div class="taskcard-actions">
-                <button class="taskcard-btn">✎</button>
-                <button class="taskcard-btn">✕</button>
+                <button class="taskcard-btn" (click)="onEdit()">✎</button>
+                <button class="taskcard-btn" (click)="onDelete()">✕</button>
               </div>
             </div>

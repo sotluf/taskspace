@@ -10,9 +10,19 @@
           <app-column
             [column]="column"
             [tasks]="getTasksForColumn(tasks, column.id)"
+            (addTask)="onAddTask($event)"
+            (editTask)="onEditTask($event)"
+            (deleteTask)="onDeleteTask($event)"
           />
         }
       }
     }
   </div>
+
+  <app-task-modal
+    [isOpen]="isModalOpen"
+    [editingTask]="editingTask"
+    (saveTask)="onSaveTask($event)"
+    (cancel)="onCancelModal()"
+  />
 </div>

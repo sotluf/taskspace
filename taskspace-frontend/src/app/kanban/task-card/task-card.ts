@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/task.model';
 
 @Component({
@@ -9,4 +9,14 @@ import { Task } from '../../models/task.model';
 })
 export class TaskCard {
   @Input() task!: Task;
+  @Output() edit = new EventEmitter<Task>();
+  @Output() delete = new EventEmitter<number>();
+
+  onEdit(): void {
+    this.edit.emit(this.task);
+  }
+
+  onDelete(): void {
+    this.delete.emit(this.task.id);
+  }
 }

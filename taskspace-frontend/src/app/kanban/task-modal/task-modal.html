@@ -1,1 +1,43 @@
-<p>task-modal works!</p>
+@if (isOpen) {
+  <div class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ editingTask ? 'Edit Task' : 'Create Task' }}</h2>
+        <button class="modal-close" (click)="onCancel()">&times;</button>
+      </div>
+
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="title">Title:</label>
+          <input id="title" type="text" formControlName="title" placeholder="Enter title" />
+          <span
+            *ngIf="taskForm.get('title')?.hasError('required') && taskForm.get('title')?.touched"
+            class="error"
+            >Title is required.</span
+          >
+          <span
+            *ngIf="taskForm.get('title')?.hasError('minlength') && taskForm.get('title')?.touched"
+            class="error"
+            >Title must be at least 3 characters.</span
+          >
+        </div>
+
+        <div>
+          <label for="description">Description:</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            placeholder="Enter description"
+            rows="4"
+          ></textarea>
+          <span>{{ taskForm.get('description')?.value?.length || 0 }}/500</span>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" [disabled]="!taskForm.valid">Save</button>
+          <button type="button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
