@@ -4,30 +4,15 @@
   </div>
 
   <div class="board">
-    @for (column of columns; track column.id) {
-      <div class="column column-{{ column.status }}">
-        <div class="column-header">
-          <span class="column-title">{{ column.name }}</span>
-          <span class="column-count">{{ getTasksForColumn(column.id).length }}</span>
-        </div>
-
-        <div class="column-tasks">
-          @for (task of getTasksForColumn(column.id); track task.id) {
-            <div class="taskcard">
-              <div class="taskcard-title">{{ task.title }}</div>
-              <div class="taskcard-desc">{{ task.description }}</div>
-              <div class="taskcard-actions">
-                <button class="taskcard-btn">✎</button>
-                <button class="taskcard-btn">✕</button>
-              </div>
-            </div>
-          }
-        </div>
-
-        <button class="column-add-btn">
-          + Add task
-        </button>
-      </div>
+    @if (columns$ | async; as columns) {
+      @if (tasks$ | async; as tasks) {
+        @for (column of columns; track column.id) {
+          <app-column
+            [column]="column"
+            [tasks]="getTasksForColumn(tasks, column.id)"
+          />
+        }
+      }
     }
   </div>
 </div>
