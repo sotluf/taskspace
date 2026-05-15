@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Column as ColumnModel, Task } from '../../models/task.model';
+import { TaskCard } from '../task-card/task-card';
 
 @Component({
   selector: 'app-column',
-  imports: [],
+  imports: [TaskCard],
   templateUrl: './column.html',
-  styleUrl: './column.scss',
+  styleUrls: ['./column.scss'],
 })
-export class Column {}
+export class Column {
+  @Input() column!: ColumnModel;
+  @Input() tasks: Task[] = [];
+}

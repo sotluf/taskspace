@@ -1,1 +1,16 @@
-<p>column works!</p>
+<div class="column column-{{ column.status }}">
+        <div class="column-header">
+          <span class="column-title">{{ column.name }}</span>
+          <span class="column-count">{{ tasks.length }}</span>
+        </div>
+
+        <div class="column-tasks">
+          @for (task of tasks; track task.id) {
+            <app-task-card [task]="task" />
+          }
+        </div>
+
+        <button class="column-add-btn">
+          + Add task
+        </button>
+      </div> 
