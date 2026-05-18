@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/task.model';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-card',
-  imports: [],
+  imports: [DragDropModule],
   templateUrl: './task-card.html',
   styleUrls: ['./task-card.scss'],
 })

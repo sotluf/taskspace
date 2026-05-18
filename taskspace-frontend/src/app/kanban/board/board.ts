@@ -4,11 +4,12 @@ import { TaskService } from '../../services/task.service';
 import { Column as ColumnModel, Task } from '../../models/task.model';
 import { Column } from '../column/column';
 import { TaskModal } from '../task-modal/task-modal';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
-  imports: [CommonModule, AsyncPipe, Column, TaskModal],
+  imports: [CommonModule, AsyncPipe, Column, TaskModal, DragDropModule],
   templateUrl: './board.html',
   styleUrls: ['./board.scss'],
 })
@@ -76,5 +77,16 @@ export class Board {
   onCancelModal(): void {
     this.isModalOpen = false;
     this.editingTask = null;
+  }
+
+  onTaskDropped(data: { event: CdkDragDrop<Task[]>; columnId: number }): void {
+    if (data.event.previousContainer !== data.event.container) {
+      const task = data.event.container.data[data.event.currentIndex];
+      this.taskService
+        .updateTask(task.id, {
+          columnId: data.columnId,
+        })
+        .subscribe();
+    }
   }
 }

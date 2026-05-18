@@ -1,20 +1,26 @@
 <div class="column column-{{ column.status }}">
-        <div class="column-header">
-          <span class="column-title">{{ column.name }}</span>
-          <span class="column-count">{{ tasks.length }}</span>
-        </div>
+  <div class="column-header">
+    <span class="column-title">{{ column.name }}</span>
+    <span class="column-count">{{ tasks.length }}</span>
+  </div>
 
-        <div class="column-tasks">
-          @for (task of tasks; track task.id) {
-            <app-task-card
-              [task]="task"
-              (edit)="onEditTask($event)"
-              (delete)="onDeleteTask($event)"
-            />
-          }
-        </div>
+  <div
+    class="column-tasks"
+    cdkDropList
+    [id]="'column-' + column.id"
+    [cdkDropListData]="tasks"
+    (cdkDropListDropped)="onDrop($event)"
+  >
+    @for (task of tasks; track task.id) {
+      <app-task-card
+      [task]="task"
+      (edit)="onEditTask($event)"
+      (delete)="onDeleteTask($event)"
+      />
+    }
+  </div>
 
-        <button class="column-add-btn" (click)="onAddTask()">
-          + Add task
-        </button>
-      </div>
+  <button class="column-add-btn" (click)="onAddTask()">
+    + Add task
+  </button>
+</div>

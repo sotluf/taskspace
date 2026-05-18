@@ -3,7 +3,7 @@
     <h1>My Board</h1>
   </div>
 
-  <div class="board">
+  <div class="board" cdkDropListGroup>
     @if (columns$ | async; as columns) {
       @if (tasks$ | async; as tasks) {
         @for (column of columns; track column.id) {
@@ -13,6 +13,7 @@
             (addTask)="onAddTask($event)"
             (editTask)="onEditTask($event)"
             (deleteTask)="onDeleteTask($event)"
+            (taskDropped)="onTaskDropped($event)"
           />
         }
       }
