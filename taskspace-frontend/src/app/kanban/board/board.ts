@@ -4,7 +4,7 @@ import { TaskService } from '../../services/task.service';
 import { Column as ColumnModel, Task } from '../../models/task.model';
 import { Column } from '../column/column';
 import { TaskModal } from '../task-modal/task-modal';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -16,7 +16,6 @@ export class Board {
   columns$: Observable<ColumnModel[]>;
   tasks$: Observable<Task[]>;
 
-  // 👇 Стан модалки
   isModalOpen: boolean = false;
   editingTask: Task | null = null;
   editingColumnId: number | null = null;
@@ -30,58 +29,50 @@ export class Board {
     return tasks.filter(t => t.columnId === columnId);
   }
 
-  // 👇 Обробляємо подію "Додати задачу"
   onAddTask(columnId: number): void {
-    this.editingTask = null;  // Чистимо задачу при створенні нової
+    this.editingTask = null;
     this.editingColumnId = columnId;
     this.isModalOpen = true;
   }
 
-  // 👇 Обробляємо подію "Редагувати задачу"
   onEditTask(task: Task): void {
     this.editingTask = task;
     this.editingColumnId = task.columnId;
     this.isModalOpen = true;
   }
 
-  // 👇 Обробляємо подію "Видалити задачу"
-  // 👇 Обробляємо подію "Видалити задачу"
   onDeleteTask(taskId: number): void {
-    if (confirm('Ви впевнені, що хочете видалити цю задачу?')) {
+    if (confirm('Do you really want to delete this task?')) {
       this.taskService.deleteTask(taskId).subscribe({
         next: () => {
-          console.log('Задача видалена');
+          console.log('Task deleted');
         },
-        error: (err) => console.error('Помилка при видаленні', err),
+        error: (err) => console.error('Error occurred while deleting task', err),
       });
     }
   }
 
-  // 👇 Обробляємо збереження форми
   onSaveTask(taskData: Task): void {
     if (this.editingTask) {
-      // Редагування існуючої задачи
       this.taskService.updateTask(Number(taskData.id), taskData).subscribe({
         next: () => {
-          console.log('Задача оновлена');
+          console.log('Task updated');
           this.isModalOpen = false;
         },
-        error: (err) => console.error('Помилка при оновленні', err),
+        error: (err) => console.error('Error occurred while updating task', err),
       });
     } else {
-      // Створення нової задачи
       const newTask = { ...taskData, columnId: this.editingColumnId! };
       this.taskService.addTask(newTask as any).subscribe({
         next: () => {
-          console.log('Задача створена');
+          console.log('Task created');
           this.isModalOpen = false;
         },
-        error: (err) => console.error('Помилка при створенні', err),
+        error: (err) => console.error('Error occurred while creating task', err),
       });
     }
   }
 
-  // 👇 Обробляємо скасування модалки
   onCancelModal(): void {
     this.isModalOpen = false;
     this.editingTask = null;
